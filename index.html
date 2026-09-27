@@ -203,7 +203,86 @@ function bookNow() {
 function queueNow() {
   alert("شاشة حجز الدور الفوري هنضيفها بعد حجز الموعد 🎟️");
 }
+async function loadBookingData() {
+  try {
 
+    const response = await fetch("/api/booking-data");
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "فشل تحميل البيانات");
+    }
+
+    const shopSelect = document.getElementById("shopSelect");
+    const barberSelect = document.getElementById("barberSelect");
+    const serviceSelect = document.getElementById("serviceSelect");
+
+    shopSelect.innerHTML =
+      '<option value="">اختر محل الحلاقة</option>';
+
+    barberSelect.innerHTML =
+      '<option value="">اختر الحلاق</option>';
+
+    serviceSelect.innerHTML =
+      '<option value="">اختر الخدمة</option>';
+
+    data.shops.forEach(shop => {
+      const option = document.createElement("option");
+
+      option.value = shop.id;
+      option.textContent =
+        shop.name + (shop.city ? " - " + shop.city : "");
+
+      shopSelect.appendChild(option);
+    });
+
+    shopSelect.addEventListener("change", function () {
+
+      const selectedShop = this.value;
+
+      barberSelect.innerHTML =
+        '<option value="">اختر الحلاق</option>';
+
+      serviceSelect.innerHTML =
+        '<option value="">اختر الخدمة</option>';
+
+      data.barbers
+        .filter(barber => barber.shop_id === selectedShop)
+        .forEach(barber => {
+
+          const option = document.createElement("option");
+
+          option.value = barber.id;
+          option.textContent = barber.name;
+
+          barberSelect.appendChild(option);
+        });
+
+      data.services
+        .filter(service => service.shop_id === selectedShop)
+        .forEach(service => {
+
+          const option = document.createElement("option");
+
+          option.value = service.id;
+          option.textContent =
+            service.name + " - " + service.price + " جنيه";
+
+          serviceSelect.appendChild(option);
+        });
+
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("حصل خطأ أثناء تحميل بيانات المحلات");
+
+  }
+}
+  loadBookingData();
 async function submitAppointment() {
 
   const name = document.getElementById("customerName").value;
