@@ -20,9 +20,9 @@ module.exports = async (req, res) => {
         .order("name");
 
     if (shopsError) {
-      return res.status(400).json({
-        error: shopsError.message
-      });
+     return res.status(400).json({
+  error: "SHOPS_ERROR: " + shopsError.message
+});
     }
 
     const { data: barbers, error: barbersError } =
@@ -33,9 +33,9 @@ module.exports = async (req, res) => {
         .order("name");
 
     if (barbersError) {
-      return res.status(400).json({
-        error: barbersError.message
-      });
+    return res.status(400).json({
+  error: "BARBERS_ERROR: " + barbersError.message
+}); 
     }
 
     const { data: services, error: servicesError } =
@@ -46,9 +46,9 @@ module.exports = async (req, res) => {
         .order("name");
 
     if (servicesError) {
-      return res.status(400).json({
-        error: servicesError.message
-      });
+    return res.status(400).json({
+  error: "SERVICES_ERROR: " + servicesError.message
+});
     }
 
     return res.status(200).json({
