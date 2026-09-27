@@ -204,7 +204,8 @@ function queueNow() {
   alert("شاشة حجز الدور الفوري هنضيفها بعد حجز الموعد 🎟️");
 }
 
-function submitAppointment() {
+async function submitAppointment() {
+
   const name = document.getElementById("customerName").value;
   const phone = document.getElementById("customerPhone").value;
   const shop = document.getElementById("shopSelect").value;
@@ -217,6 +218,37 @@ function submitAppointment() {
     return;
   }
 
+  try {
+
+    const response = await fetch("/api/book-appointment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: name,
+        phone: phone,
+        shop_id: shop,
+        barber_id: barber,
+        service_id: service,
+        appointment_time: new Date(time).toISOString()
+      })
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.error || "حدث خطأ أثناء الحجز");
+    }
+
+    alert("تم إرسال الحجز بنجاح ✅");
+
+  } catch (error) {
+
+    alert("حصل خطأ: " + error.message);
+
+  }
+}
   alert("بيانات الحجز جاهزة ✅\nهنربطها بقاعدة البيانات في الخطوة التالية.");
 }
 </script>
