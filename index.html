@@ -153,7 +153,44 @@
       </div>
 
     </section>
+<div id="bookingBox" class="booking-box">
 
+  <h2>💈 احجز موعدك</h2>
+
+  <input
+    type="text"
+    id="customerName"
+    placeholder="اسمك"
+  >
+
+  <input
+    type="tel"
+    id="customerPhone"
+    placeholder="رقم الموبايل"
+  >
+
+  <select id="shopSelect">
+    <option value="">اختر محل الحلاقة</option>
+  </select>
+
+  <select id="barberSelect">
+    <option value="">اختر الحلاق</option>
+  </select>
+
+  <select id="serviceSelect">
+    <option value="">اختر الخدمة</option>
+  </select>
+
+  <input
+    type="datetime-local"
+    id="appointmentTime"
+  >
+
+  <button onclick="submitAppointment()">
+    تأكيد الحجز
+  </button>
+
+</div>
   </main>
 <script>
   function bookNow() {
