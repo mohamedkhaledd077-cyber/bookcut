@@ -193,13 +193,32 @@
 </div>
   </main>
 <script>
-  function bookNow() {
-    alert("هنفتح شاشة حجز الموعد قريبًا 💈");
+function bookNow() {
+  document.getElementById("bookingBox").style.display = "block";
+  document.getElementById("bookingBox").scrollIntoView({
+    behavior: "smooth"
+  });
+}
+
+function queueNow() {
+  alert("شاشة حجز الدور الفوري هنضيفها بعد حجز الموعد 🎟️");
+}
+
+function submitAppointment() {
+  const name = document.getElementById("customerName").value;
+  const phone = document.getElementById("customerPhone").value;
+  const shop = document.getElementById("shopSelect").value;
+  const barber = document.getElementById("barberSelect").value;
+  const service = document.getElementById("serviceSelect").value;
+  const time = document.getElementById("appointmentTime").value;
+
+  if (!name || !phone || !shop || !barber || !service || !time) {
+    alert("من فضلك املأ كل البيانات المطلوبة");
+    return;
   }
 
-  function queueNow() {
-    alert("هنفتح شاشة حجز الدور الفوري قريبًا 🎟️");
-  }
+  alert("بيانات الحجز جاهزة ✅\nهنربطها بقاعدة البيانات في الخطوة التالية.");
+}
 </script>
   }
 </script>
